@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenTK" Version="4.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AJ.Engine.Graphics.Interfaces\AJ.Engine.Graphics.Interfaces.csproj" />
+    <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

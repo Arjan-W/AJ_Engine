@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AJ.Engine.Graphics.Interfaces\AJ.Engine.Graphics.Interfaces.csproj" />
+    <ProjectReference Include="..\AJ.Engine.Graphics.OKT_STG\AJ.Engine.Graphics.OKT_STG.csproj" />
+    <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
