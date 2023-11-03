@@ -3,6 +3,7 @@ using AJ.Engine.Graphics.Interfaces.Util;
 using AJ.Engine.Graphics.OKT_STG.Util;
 using AJ.Engine.Interfaces;
 using AJ.Engine.Interfaces.Services;
+using AJ.Logging.Interfaces;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Desktop;
 
@@ -12,11 +13,15 @@ namespace AJ.Engine.Graphics.OKT_STG
     {
         public IWindow Window => _window;
 
+        private IApplication _application;
+        private ILogger _logger;
         private NativeWindow _nativeWindow;
         private Window _window;
 
-        public GraphicsContext(IApplication application)
+        public GraphicsContext(ICore core)
         {
+            _application = core.Application;
+            _logger = core.ServiceProvider.Get<ILogger>();
             NativeWindowSettings nws = new NativeWindowSettings
             {
                 API = OpenTK.Windowing.Common.ContextAPI.OpenGL,
@@ -27,10 +32,11 @@ namespace AJ.Engine.Graphics.OKT_STG
                 StartFocused = true,
                 StartVisible = true,
                 Profile = OpenTK.Windowing.Common.ContextProfile.Core,
-                Title = application.Title
+                Title = _application.Title
             };
             _nativeWindow = new NativeWindow(nws);
             _window = new Window(_nativeWindow);
+            _logger.LogInfo("GraphicsContext", "Started!");
         }
 
         public void Update()
@@ -42,7 +48,7 @@ namespace AJ.Engine.Graphics.OKT_STG
 
         public void Dispose()
         {
-            
+            _logger.LogInfo("GraphicsContext", "Stopped!");
         }
     }
 }

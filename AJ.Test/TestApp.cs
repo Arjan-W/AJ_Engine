@@ -1,4 +1,5 @@
 ﻿using AJ.Engine;
+using AJ.Logging.Interfaces;
 
 namespace AJ.Test
 {
@@ -6,7 +7,8 @@ namespace AJ.Test
     {
         public TestApp() : base("AJ test app")
         {
-
+            LogTypesToConsole(LogTypes.None);
+            LogTypesToFile(LogTypes.None);
         }
 
         protected override void OnInitialize()

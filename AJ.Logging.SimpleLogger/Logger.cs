@@ -17,6 +17,7 @@ namespace AJ.Logging.SimpleLogger
         private const string MESSAGE_DATETIME = "ddd HH:mm:ss";
         private const string FILE_DATETIME = "yyyy-MM-dd-HH-mm-ss";
 
+        private readonly ICore _core;
         private readonly LogTypes _logToConsole;
         private readonly LogTypes _logToFile;
         private readonly LogTypes _logFilter;
@@ -32,10 +33,11 @@ namespace AJ.Logging.SimpleLogger
         private Thread _thread;
         private bool _isRunning;
 
-        public Logger(IApplication application)
+        public Logger(ICore core)
         {
-            _logToConsole = application.LogToConsole;
-            _logToFile = application.LogToFile;
+            _core = core;
+            _logToConsole = core.Application.LogToConsole;
+            _logToFile = core.Application.LogToFile;
             _logFilter = _logToConsole | _logToFile;
 
             _pipeServerOut = new AnonymousPipeServerStream(PipeDirection.In);
