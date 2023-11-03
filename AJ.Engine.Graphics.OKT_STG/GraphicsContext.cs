@@ -2,12 +2,13 @@
 using AJ.Engine.Graphics.Interfaces.Util;
 using AJ.Engine.Graphics.OKT_STG.Util;
 using AJ.Engine.Interfaces;
+using AJ.Engine.Interfaces.Services;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Desktop;
 
 namespace AJ.Engine.Graphics.OKT_STG
 {
-    public class GraphicsContext : IGraphicsContext
+    public class GraphicsContext : IEngineService, IGraphicsContext
     {
         public IWindow Window => _window;
 
@@ -39,5 +40,9 @@ namespace AJ.Engine.Graphics.OKT_STG
             _window.Update();
         }
 
+        public void Dispose()
+        {
+            
+        }
     }
 }

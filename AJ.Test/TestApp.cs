@@ -1,10 +1,4 @@
 ﻿using AJ.Engine;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AJ.Test
 {
@@ -17,24 +11,29 @@ namespace AJ.Test
 
         protected override void OnInitialize()
         {
-            Core.Window.OnCloseWindowRequest += () =>
-            {
+            Window.OnCloseWindowRequest += () =>
+            {                
+                Logger.LogDebug("Window Event",
+                    "Window close requested!");
                 Core.Stop();
             };
 
-            Core.Window.OnResize += (size) =>
+            Window.OnResize += (newSize) =>
             {
-                Console.WriteLine("Resize " + size.ToString());
+                Logger.LogDebug("Window Event",
+                   $"Window resized to {newSize}!");
             };
 
-            Core.Window.OnResizeFinished += (size) =>
+            Window.OnResizeFinished += (finalSize) =>
             {
-                Console.WriteLine("Resize finished " + size.ToString());
+                Logger.LogDebug("Window Event",
+                   $"Window final resize to {finalSize}!");
             };
 
-            Core.Window.OnFocusChanged += (isFocused) =>
+            Window.OnFocusChanged += (focused) =>
             {
-                Console.WriteLine($"window focused: {isFocused}");
+                Logger.LogDebug("Window Event",
+                   $"Window focused: {focused}!");
             };
         }
 

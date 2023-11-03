@@ -6,7 +6,6 @@ namespace AJ.Engine.Graphics.OKT_STG.Util
 {
     internal class Window : IWindow
     {
-
         public string Title
         {
             get => _nativeWindow.Title;
