@@ -1,17 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AJ.Engine.Graphics.Interfaces\AJ.Engine.Graphics.Interfaces.csproj" />
-    <ProjectReference Include="..\AJ.Engine.Graphics.OKT_STG\AJ.Engine.Graphics.OKT_STG.csproj" />
     <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
     <ProjectReference Include="..\AJ.Logging.Interfaces\AJ.Logging.Interfaces.csproj" />
-    <ProjectReference Include="..\AJ.Logging.SimpleLogger\AJ.Logging.SimpleLogger.csproj" />
+    <ProjectReference Include="..\AJ.Logging\AJ.Logging.csproj" />
   </ItemGroup>
 
 </Project>

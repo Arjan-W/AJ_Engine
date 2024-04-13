@@ -1,0 +1,27 @@
+Engine:
+	-FileManagement
+		-FileManager - Jesse
+		-FileHandle - Jesse
+	-Cameras
+		-Camera - Arjan
+		-CameraController
+	-SceneManagement
+		-SceneManager
+		-Scene
+	-TimeManagement
+		-Timer - Jesse
+		-GameTime - Jesse
+	-Util
+		-MathUtil - Arjan
+Modules:
+	-Logging - Jesse
+	-ThreadPool/Taskmanagent/Tasksystem
+	-Graphics(OpenTK)
+		-InputManager
+		-Window
+		-GraphicalResources
+			(abstract resourceManager)*
+			-Shaders*
+			-Textures*
+			-Models*
+			-Fonts*
