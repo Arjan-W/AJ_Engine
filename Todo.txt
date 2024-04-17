@@ -16,9 +16,9 @@ Engine:
 Modules:
 	-Logging - Jesse
 	-ThreadPool/Taskmanagent/Tasksystem
-	-Graphics(OpenTK)
+	-Graphics(OpenTK) - Jesse
 		-InputManager
-		-Window
+		-Window - Jesse
 		-GraphicalResources
 			(abstract resourceManager)*
 			-Shaders*

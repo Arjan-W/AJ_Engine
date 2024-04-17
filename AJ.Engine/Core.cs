@@ -1,5 +1,9 @@
-﻿using AJ.Engine.Interfaces.ModuleManagement;
+﻿using AJ.Engine.FileManagement;
+using AJ.Engine.Interfaces.FileManager;
+using AJ.Engine.Interfaces.ModuleManagement;
+using AJ.Engine.Interfaces.TimeManagement;
 using AJ.Engine.ModuleManagement;
+using AJ.Engine.TimeManagement;
 using AJ.Logging.Interfaces;
 
 namespace AJ.Engine
@@ -20,7 +24,7 @@ namespace AJ.Engine
         }
 
         public static void Stop() {
-            if(_instance != null ) {
+            if (_instance != null) {
                 _instance._isRunning = false;
             }
         }
@@ -39,6 +43,8 @@ namespace AJ.Engine
 
         private void Initialize() {
             Logging.Installer.Install(_moduleManager, _application);
+            _moduleManager.Install<IGameTime, GameTime>(new GameTime());
+            _moduleManager.Install<IFileManager, FileManager>(new FileManager(_moduleManager));
         }
 
         private void GameLoop() {

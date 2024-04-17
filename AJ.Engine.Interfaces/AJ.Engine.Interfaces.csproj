@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AJ.Logging.Interfaces\AJ.Logging.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

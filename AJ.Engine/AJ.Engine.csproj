@@ -7,9 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\test_imbedded.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\test_imbedded.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
     <ProjectReference Include="..\AJ.Logging.Interfaces\AJ.Logging.Interfaces.csproj" />
     <ProjectReference Include="..\AJ.Logging\AJ.Logging.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Util\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\test_external.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
