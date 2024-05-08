@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Test_changed_fiel.txt" />
+    <None Remove="Assets\Test_test.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Assets\Test_changed_fiel.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Test_test.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AJ.Engine\AJ.Engine.csproj" />
   </ItemGroup>
 

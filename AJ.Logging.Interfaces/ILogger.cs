@@ -9,7 +9,8 @@ namespace AJ.Logging.Interfaces
         INFO = 1,
         WARNING = 2,
         ERROR = 4,
-        DEBUG = 8,
+        FATAL = 8,
+        DEBUG = 16,
         ALL = 255
     }
 
