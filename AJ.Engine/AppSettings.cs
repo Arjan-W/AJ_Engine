@@ -36,12 +36,18 @@ namespace AJ.Engine
             set => _logToFile = value;
         }
 
+        public int NumOfTaskWorkers {
+            get => _numberOfTaskWorkers;
+            set => _numberOfTaskWorkers = value;
+        }
+
         private string _title;
         private bool _enableGraphics;
         private bool _closeOnRequest;
         private TimeSpan? _deltaTimeConstraint;
         private LogTypes _logToConsole;
         private LogTypes _logToFile;
+        private int _numberOfTaskWorkers;
 
         public AppSettings() {
             _title = Assembly.GetExecutingAssembly()?.FullName ?? "defaultTitle";
@@ -50,6 +56,7 @@ namespace AJ.Engine
             _deltaTimeConstraint = null;
             _logToConsole = LogTypes.ALL;
             _logToFile = LogTypes.ALL;
+            _numberOfTaskWorkers = 8;
         }
     }
 }

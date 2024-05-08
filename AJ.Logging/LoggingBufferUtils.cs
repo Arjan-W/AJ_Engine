@@ -90,17 +90,22 @@ namespace AJ.Logging
             stream.Read(data);
 
             if (appendLine)
-                stringBuffer.AppendLine(MemoryMarshal.Cast<byte, char>(data).ToString());
+                stringBuffer.AppendLine(MemoryMarshal.Cast<byte, char>(data).ToString());//alloc
             else
-                stringBuffer.Append(MemoryMarshal.Cast<byte, char>(data).ToString());
+                stringBuffer.Append(MemoryMarshal.Cast<byte, char>(data).ToString());//alloc
         }
 
-        public static void WriteStringBufferToStream(StringBuilder stringBuffer, StreamWriter stream)
+        public static void WriteStringBufferToStream(StringBuilder stringBuffer, BinaryWriter stream)
         {
             Span<char> data = stackalloc char[stringBuffer.Length];
             stringBuffer.CopyTo(0, data, data.Length);
             ReadOnlySpan<byte> readOnlyData = MemoryMarshal.Cast<char, byte>(data);
-            stream.WriteLine(data);
+            stream.Write(readOnlyData);
+        }
+        public static void WriteStringBufferToStream(StringBuilder stringBuffer, StreamWriter stream) {
+            Span<char> data = stackalloc char[stringBuffer.Length];
+            stringBuffer.CopyTo(0, data, data.Length);
+            stream.Write(data);
         }
 
     }

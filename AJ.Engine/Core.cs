@@ -4,7 +4,6 @@ using AJ.Engine.Interfaces.ModuleManagement;
 using AJ.Engine.Interfaces.TimeManagement;
 using AJ.Engine.ModuleManagement;
 using AJ.Engine.TimeManagement;
-using AJ.Logging.Interfaces;
 
 namespace AJ.Engine
 {
@@ -29,7 +28,7 @@ namespace AJ.Engine
             }
         }
 
-        private static IModuleProvider ModuleProvider => _instance._moduleManager;
+        public static IModuleProvider ModuleProvider => _instance._moduleManager;
 
         private readonly Application _application;
         private readonly ModuleManager _moduleManager;
@@ -42,9 +41,11 @@ namespace AJ.Engine
         }
 
         private void Initialize() {
-            Logging.Installer.Install(_moduleManager, _application);
             _moduleManager.Install<IGameTime, GameTime>(new GameTime());
+            Logging.Installer.Install(_moduleManager, _moduleManager, _application);
             _moduleManager.Install<IFileManager, FileManager>(new FileManager(_moduleManager));
+            TaskManagement.Installer.Install(_moduleManager, _moduleManager, _application);
+            Graphics.OpenTK.Installer.Install(_moduleManager, _moduleManager, _application);
         }
 
         private void GameLoop() {
@@ -54,6 +55,8 @@ namespace AJ.Engine
         }
 
         private void Deinitialize() {
+            Graphics.OpenTK.Installer.Uninstall(_moduleManager);
+            TaskManagement.Installer.Uninstall(_moduleManager);
             Logging.Installer.Uninstall(_moduleManager);
         }
     }

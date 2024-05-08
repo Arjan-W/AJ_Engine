@@ -11,5 +11,6 @@ namespace AJ.Engine.Interfaces
         public TimeSpan? DeltaTimeConstraint { get; }
         public LogTypes LogToConsole { get; }
         public LogTypes LogToFile { get; }
+        public int NumOfTaskWorkers { get; }
     }
 }

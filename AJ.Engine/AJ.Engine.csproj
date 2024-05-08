@@ -16,8 +16,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
+    <ProjectReference Include="..\AJ.Graphics.Interfaces\AJ.Graphics.Interfaces.csproj" />
+    <ProjectReference Include="..\AJ.Graphics.OpenTK\AJ.Graphics.OpenTK.csproj" />
     <ProjectReference Include="..\AJ.Logging.Interfaces\AJ.Logging.Interfaces.csproj" />
     <ProjectReference Include="..\AJ.Logging\AJ.Logging.csproj" />
+    <ProjectReference Include="..\AJ.TaskManagement.Interfaces\AJ.TaskManagement.Interfaces.csproj" />
+    <ProjectReference Include="..\AJ.TaskManagement\AJ.TaskManagement.csproj" />
   </ItemGroup>
 
   <ItemGroup>

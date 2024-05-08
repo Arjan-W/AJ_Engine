@@ -1,5 +1,6 @@
 ﻿using AJ.Engine.Interfaces;
-using AJ.Engine.Interfaces.ModuleManagement;
+using AJ.Graphics.Interfaces;
+using AJ.Graphics.Interfaces.Windowing;
 using AJ.Logging.Interfaces;
 using System;
 
@@ -13,6 +14,7 @@ namespace AJ.Engine
         public TimeSpan? DeltaTimeConstraint => _deltaTimeConstraint;
         public LogTypes LogToConsole => _logToConsole;
         public LogTypes LogToFile => _logToFile;
+        public int NumOfTaskWorkers => _numOftaskWorkers;
 
         private readonly string _title;
         private readonly bool _enableGraphics;
@@ -20,6 +22,7 @@ namespace AJ.Engine
         private readonly TimeSpan? _deltaTimeConstraint;
         private readonly LogTypes _logToConsole;
         private readonly LogTypes _logToFile;
+        private readonly int _numOftaskWorkers;
 
         public Application(AppSettings appSettings) {
             _title = appSettings.Title;
@@ -28,9 +31,14 @@ namespace AJ.Engine
             _deltaTimeConstraint = appSettings.DeltaTimeConstraint;
             _logToConsole = appSettings.LogToConsole;
             _logToFile = appSettings.LogToFile;
+            _numOftaskWorkers = appSettings.NumOfTaskWorkers;
         }
 
         internal void Initialize() {
+            if (_closeOnRequest) {
+                IWindow window = Core.ModuleProvider.Get<IGraphicsContext>().Window;
+                window.OnCloseWindowRequest += () => Core.Stop();
+            }
             OnInitialize();
         }
 

@@ -1,5 +1,6 @@
 ﻿using AJ.Engine.Interfaces;
 using AJ.Engine.Interfaces.ModuleManagement;
+using AJ.Engine.Interfaces.TimeManagement;
 using AJ.Logging.Interfaces;
 using System;
 using System.IO;
@@ -7,18 +8,26 @@ using System.IO.Pipes;
 using System.Text;
 using System.Threading;
 using static AJ.Logging.LoggingBufferUtils;
+using Timer = AJ.Engine.Interfaces.TimeManagement.Timer;
 
 namespace AJ.Logging
 {
     internal class Logger : ILogger, IModule
     {
+        private const byte FLUSH_COMMAND = 128;
+        private const byte SHUTDOWN_COMMAND = 255;
+        private const int BUFFER_SIZE = 65536;
+        private const int FLUSH_TIMER_INTERVAL_MILLIS = 500;
         private const int MESSAGE_DATA_DEFAULT_SIZE = 1 + 8 + 4;
+
         private const string MESSAGE_HEADER = "[{0}][{1}][{2:ddd HH:mm:ss}]";
         private const string FILE_DATETIME = "yyyy-MM-dd-HH-mm-ss";
 
         private readonly IApplication _application;
+        private readonly IGameTime _gameTime;
         private readonly LogTypes _logFilter;
 
+        private readonly Timer _timer;
         private readonly AnonymousPipeServerStream _pipeServerOut;
         private readonly AnonymousPipeClientStream _pipeClientIn;
         private readonly string _filePath;
@@ -30,10 +39,12 @@ namespace AJ.Logging
         private Thread _logThread;
         private bool _isRunning;
 
-        internal Logger(IApplication application) {
+        internal Logger(IModuleProvider moduleProvider, IApplication application) {
             _application = application;
+            _gameTime = moduleProvider.Get<IGameTime>();
             _logFilter = application.LogToConsole | application.LogToFile;
 
+            _timer = new Timer(TimeSpan.FromMilliseconds(FLUSH_TIMER_INTERVAL_MILLIS));
             _pipeServerOut = new AnonymousPipeServerStream(PipeDirection.In);
             _pipeClientIn = new AnonymousPipeClientStream(PipeDirection.Out, _pipeServerOut.ClientSafePipeHandle);
 
@@ -128,31 +139,48 @@ namespace AJ.Logging
         }
 
         private void LogLoop() {
-            using (StreamWriter consoleWriter = new StreamWriter(Console.OpenStandardOutput()))
-            using (StreamWriter fileWriter = CreateStreamWriter()) {
-                consoleWriter.AutoFlush = true;
-                byte commandByte;
-                while (_isRunning) {
-
-
-                    commandByte = (byte)_pipeServerOut.ReadByte();
-                    switch (commandByte) {
-                        default:
-                            ReadMessage((LogTypes)commandByte, fileWriter, consoleWriter);
-                            break;
-                        case 255:
-                            _isRunning = false;
-                            break;
+            using (StreamWriter consoleWriter = CreateConsoleStreamWriter())
+            using (StreamWriter fileWriter = CreateFileStreamWriter()) {
+                try {
+                    byte commandByte;
+                    while (_isRunning) {
+                        commandByte = (byte)_pipeServerOut.ReadByte();
+                        switch (commandByte) {
+                            case SHUTDOWN_COMMAND:
+                                _isRunning = false;
+                                break;
+                            case FLUSH_COMMAND:
+                                    consoleWriter?.Flush();
+                                    fileWriter?.Flush();
+                                break;
+                            default:
+                                ReadMessage((LogTypes)commandByte, fileWriter, consoleWriter);
+                                break;
+                        }
                     }
+                }
+                finally {
+                    consoleWriter?.Flush();
+                    fileWriter?.Flush();
                 }
             }
         }
+        private StreamWriter CreateConsoleStreamWriter() {
+            if (_application.LogToConsole == LogTypes.NONE)
+                return null;
+            var sw = new StreamWriter(Console.OpenStandardOutput(BUFFER_SIZE), null, BUFFER_SIZE, false);
+            sw.AutoFlush = false;
+            return sw;
+        }
 
-        private StreamWriter CreateStreamWriter() {
+        private StreamWriter CreateFileStreamWriter() {
             if (_application.LogToFile == LogTypes.NONE)
                 return null;
-            return new StreamWriter(File.OpenWrite(_filePath));
+            var sw = new StreamWriter(new FileStream(_filePath, FileMode.Append, FileAccess.Write), Encoding.Unicode, BUFFER_SIZE, false);
+            sw.AutoFlush = false;
+            return sw;
         }
+
 
         private void ReadMessage(LogTypes logType, StreamWriter fileWriter, StreamWriter consoleWriter) {
             DateTime dateTime = DateTime.FromBinary(ReadLong(_pipeServerOut));
@@ -164,10 +192,13 @@ namespace AJ.Logging
 
             ReadString(_pipeServerOut, _titleBuffer, false);
             CreateTitle(logType, dateTime);
+            _titleTimeStampBuffer.AppendLine();
 
             for (int i = 0; i < numOfStrings; i++) {
                 ReadString(_pipeServerOut, _messageBuffer);
             }
+
+            _messageBuffer.AppendLine();
 
             if (_application.LogToConsole.HasFlag(logType))
                 WriteToConsole(logType, consoleWriter);
@@ -183,27 +214,16 @@ namespace AJ.Logging
 
             _titleTimeStampBuffer.AppendFormat(MESSAGE_HEADER,
                 GetLogTypeString(logType),
-                readOnlyData.ToString(),
+                readOnlyData.ToString(),//alloc
                 dateTime);
         }
 
+        private void AppendMessage() {
+
+        }
+
         private void WriteToConsole(LogTypes logType, StreamWriter consoleWriter) {
-            switch (logType) {
-                case LogTypes.INFO:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    break;
-                case LogTypes.WARNING:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    break;
-                case LogTypes.ERROR:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    break;
-                case LogTypes.DEBUG:
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    break;
-            }
             WriteStringBufferToStream(_titleTimeStampBuffer, consoleWriter);
-            Console.ForegroundColor = ConsoleColor.White;
             WriteStringBufferToStream(_messageBuffer, consoleWriter);
         }
 
@@ -213,7 +233,12 @@ namespace AJ.Logging
         }
 
         private void WriteEndByte() {
-            _pipeClientIn.WriteByte(255);
+            _pipeClientIn.WriteByte(SHUTDOWN_COMMAND);
+        }
+
+        void IModule.Update() {
+            if (_timer.Update(_gameTime))
+                _pipeClientIn.WriteByte(FLUSH_COMMAND);
         }
 
         void IModule.Stop() {
