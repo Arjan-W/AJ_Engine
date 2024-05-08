@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Util\" />
+    <PackageReference Include="OpenTK.Mathematics" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
