@@ -7,5 +7,12 @@
 
     internal class ResourceLoader<T> : IResourceLoader where T : Resource
     {
+        public T1 Load<T1>(string path) {
+            throw new System.NotImplementedException();
+        }
+
+        public void Unload<T1>(string path) {
+            throw new System.NotImplementedException();
+        }
     }
 }
