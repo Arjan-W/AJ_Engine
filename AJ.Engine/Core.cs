@@ -4,7 +4,8 @@ using AJ.Engine.Interfaces.ModuleManagement;
 using AJ.Engine.Interfaces.TimeManagement;
 using AJ.Engine.ModuleManagement;
 using AJ.Engine.TimeManagement;
-
+using AJ.Logging.Interfaces;
+using CurrentLogger = AJ.Logging.V2.Installer;
 namespace AJ.Engine
 {
     public class Core
@@ -42,7 +43,7 @@ namespace AJ.Engine
 
         private void Initialize() {
             _moduleManager.Install<IGameTime, GameTime>(new GameTime());
-            Logging.Installer.Install(_moduleManager, _moduleManager, _application);
+            CurrentLogger.Install(_moduleManager, _moduleManager, _application);
             _moduleManager.Install<IFileManager, FileManager>(new FileManager(_moduleManager));
             TaskManagement.Installer.Install(_moduleManager, _moduleManager, _application);
             AJ.Graphics.OpenTK.Installer.Install(_moduleManager, _moduleManager, _application);
@@ -57,7 +58,7 @@ namespace AJ.Engine
         private void Deinitialize() {
             AJ.Graphics.OpenTK.Installer.Uninstall(_moduleManager);
             TaskManagement.Installer.Uninstall(_moduleManager);
-            Logging.Installer.Uninstall(_moduleManager);
+            CurrentLogger.Uninstall(_moduleManager);
         }
     }
 }

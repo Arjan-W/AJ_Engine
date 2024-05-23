@@ -32,9 +32,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AJ.Graphics.Interfaces", "A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaskManagement", "TaskManagement", "{F5C6C0B5-EE96-41BC-BA31-F9CA4A85759D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AJ.TaskManagement", "AJ.TaskManagement\AJ.TaskManagement.csproj", "{9254E2C7-D2E6-4792-82F2-1BA96203FB87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AJ.TaskManagement", "AJ.TaskManagement\AJ.TaskManagement.csproj", "{9254E2C7-D2E6-4792-82F2-1BA96203FB87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AJ.TaskManagement.Interfaces", "AJ.TaskManagement.Interfaces\AJ.TaskManagement.Interfaces.csproj", "{B8A72AEA-6E79-411A-8E02-6A089263BC47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AJ.TaskManagement.Interfaces", "AJ.TaskManagement.Interfaces\AJ.TaskManagement.Interfaces.csproj", "{B8A72AEA-6E79-411A-8E02-6A089263BC47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AJ.LoggingV2", "AJ.LoggingV2\AJ.LoggingV2.csproj", "{BA438CEB-0EEE-4FF3-8C8E-C2860DF4FE38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +80,10 @@ Global
 		{B8A72AEA-6E79-411A-8E02-6A089263BC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8A72AEA-6E79-411A-8E02-6A089263BC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8A72AEA-6E79-411A-8E02-6A089263BC47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA438CEB-0EEE-4FF3-8C8E-C2860DF4FE38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA438CEB-0EEE-4FF3-8C8E-C2860DF4FE38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA438CEB-0EEE-4FF3-8C8E-C2860DF4FE38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA438CEB-0EEE-4FF3-8C8E-C2860DF4FE38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{F5C6C0B5-EE96-41BC-BA31-F9CA4A85759D} = {11C6236B-73D1-43B3-942C-3EA63457A9A0}
 		{9254E2C7-D2E6-4792-82F2-1BA96203FB87} = {F5C6C0B5-EE96-41BC-BA31-F9CA4A85759D}
 		{B8A72AEA-6E79-411A-8E02-6A089263BC47} = {F5C6C0B5-EE96-41BC-BA31-F9CA4A85759D}
+		{BA438CEB-0EEE-4FF3-8C8E-C2860DF4FE38} = {34351526-FECE-427F-BC74-90A6F74FA10E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ADFCE9EB-FC6D-47F9-908B-9AF4C6FC8F09}

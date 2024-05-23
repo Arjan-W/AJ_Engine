@@ -7,9 +7,11 @@ namespace AJ.Engine.ModuleManagement
 {
     internal class ModuleManager : IModuleInstaller, IModuleProvider, IModuleUninstaller
     {
+        private List<IModule> _moduleUpdateList;
         private Dictionary<Type, IModule> _modules;
 
         internal ModuleManager() {
+            _moduleUpdateList = new List<IModule>();
             _modules = new Dictionary<Type, IModule>();
         }
 
@@ -20,6 +22,7 @@ namespace AJ.Engine.ModuleManagement
             if (moduleClassType.GetInterfaces().Contains(moduleInterfaceType)) {
                 if (!_modules.ContainsKey(moduleInterfaceType)) {
                     _modules.Add(moduleInterfaceType, module);
+                    _moduleUpdateList.Add(module);
                     module.Start();
                 }
             }
@@ -33,7 +36,7 @@ namespace AJ.Engine.ModuleManagement
         }
 
         internal void Update() {
-            foreach(var module in _modules.Values)
+            foreach(var module in _moduleUpdateList)
                 module.Update();
         }
 

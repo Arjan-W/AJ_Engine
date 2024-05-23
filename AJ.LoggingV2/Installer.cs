@@ -2,7 +2,7 @@
 using AJ.Engine.Interfaces.ModuleManagement;
 using AJ.Logging.Interfaces;
 
-namespace AJ.Logging.V1
+namespace AJ.Logging.V2
 {
     public static class Installer
     {
