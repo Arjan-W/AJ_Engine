@@ -1,8 +1,10 @@
 ﻿using AJ.Engine.FileManagement;
 using AJ.Engine.Interfaces.FileManager;
 using AJ.Engine.Interfaces.ModuleManagement;
+using AJ.Engine.Interfaces.SceneManagement;
 using AJ.Engine.Interfaces.TimeManagement;
 using AJ.Engine.ModuleManagement;
+using AJ.Engine.SceneManagement;
 using AJ.Engine.TimeManagement;
 using AJ.Logging.Interfaces;
 using CurrentLogger = AJ.Logging.V2.Installer;
@@ -47,11 +49,14 @@ namespace AJ.Engine
             _moduleManager.Install<IFileManager, FileManager>(new FileManager(_moduleManager));
             TaskManagement.Installer.Install(_moduleManager, _moduleManager, _application);
             AJ.Graphics.OpenTK.Installer.Install(_moduleManager, _moduleManager, _application);
+            _moduleManager.Install<ISceneManager, SceneManager>(new SceneManager());
         }
 
         private void GameLoop() {
+            var logger = _moduleManager.Get<ILogger>();
             while (_isRunning) {
                 _moduleManager.Update();
+                logger.LogInfo("test", "testline", "testline");
             }
         }
 
