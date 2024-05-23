@@ -16,12 +16,12 @@ namespace AJ.Engine.Graphics.Cameras
             }
         }
 
-
         public PerspectiveCamera(Vector3 position, Vector3 z, float zNear, float zFar) : base(position, z, zNear, zFar) {
 
         }
 
         protected override Matrix4 CalculateProjection() {
+            float ratio = 0;
             return Matrix4.CreatePerspectiveFieldOfView(_fov, ratio, zNear, zFar);
         }
     }

@@ -45,7 +45,7 @@ namespace AJ.Engine
             Logging.Installer.Install(_moduleManager, _moduleManager, _application);
             _moduleManager.Install<IFileManager, FileManager>(new FileManager(_moduleManager));
             TaskManagement.Installer.Install(_moduleManager, _moduleManager, _application);
-            Graphics.OpenTK.Installer.Install(_moduleManager, _moduleManager, _application);
+            AJ.Graphics.OpenTK.Installer.Install(_moduleManager, _moduleManager, _application);
         }
 
         private void GameLoop() {
@@ -55,7 +55,7 @@ namespace AJ.Engine
         }
 
         private void Deinitialize() {
-            Graphics.OpenTK.Installer.Uninstall(_moduleManager);
+            AJ.Graphics.OpenTK.Installer.Uninstall(_moduleManager);
             TaskManagement.Installer.Uninstall(_moduleManager);
             Logging.Installer.Uninstall(_moduleManager);
         }
