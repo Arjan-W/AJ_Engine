@@ -8,6 +8,7 @@ using AJ.Engine.Interfaces;
 using AJ.Engine.Interfaces.FileManager;
 using AJ.Engine.Interfaces.ModuleManagement;
 using AJ.Engine.Interfaces.TaskManagement;
+using AJ.Engine.Interfaces.Util;
 using AJ.Engine.Logging.Interfaces;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
@@ -59,11 +60,11 @@ namespace AJ.Engine.Graphics.OpenTK
             NativeWindowSettings nws = new NativeWindowSettings
             {
                 API = ContextAPI.OpenGL,
-                APIVersion = new Version(4, 1),
+                APIVersion = new Version(4, 5),
                 Profile = ContextProfile.Core,
                 AutoLoadBindings = true,
                 IsEventDriven = false,
-                ClientSize = new Vector2i(1280, 720),
+                ClientSize = new Vector2i(1920, 1080),
                 Title = application.Title,
                 StartVisible = true,
                 WindowBorder = WindowBorder.Resizable
@@ -73,10 +74,10 @@ namespace AJ.Engine.Graphics.OpenTK
 
             _logger.LogInfo(
                 "GraphicsContext",
-$@"GraphicsContext Initialized!
-{GL.GetString(StringName.Vendor)}
-{GL.GetString(StringName.Version)}
-{GL.GetString(StringName.Renderer)}");
+                $"GraphicsContext Initialized!{Globals.NewLine}" +
+                $"Vendor := {GL.GetString(StringName.Vendor)}{Globals.NewLine}" +
+                $"GPU := {GL.GetString(StringName.Renderer)}{Globals.NewLine}" +
+                $"Version := {GL.GetString(StringName.Version)}");
 
             return nw;
         }
