@@ -1,13 +1,17 @@
 ﻿using AJ.Engine.FileManagement;
+using AJ.Engine.Graphics.Interfaces;
+using AJ.Engine.Graphics.Interfaces.Resources.Shaders;
 using AJ.Engine.Interfaces.FileManager;
 using AJ.Engine.Interfaces.ModuleManagement;
-using AJ.Engine.Interfaces.SceneManagement;
+using AJ.Engine.Interfaces.TaskManagement;
 using AJ.Engine.Interfaces.TimeManagement;
+using AJ.Engine.Interfaces.Util;
+using AJ.Engine.Logging.Interfaces;
 using AJ.Engine.ModuleManagement;
-using AJ.Engine.SceneManagement;
+using AJ.Engine.TaskManagement;
 using AJ.Engine.TimeManagement;
-using AJ.Logging.Interfaces;
-using CurrentLogger = AJ.LoggingV2.Installer;
+using System;
+
 namespace AJ.Engine
 {
     public class Core
@@ -45,25 +49,36 @@ namespace AJ.Engine
 
         private void Initialize() {
             _moduleManager.Install<IGameTime, GameTime>(new GameTime());
-            CurrentLogger.Install(_moduleManager, _moduleManager, _application);
+            Logging.Installer.Install(_moduleManager, _moduleManager, _application);
             _moduleManager.Install<IFileManager, FileManager>(new FileManager(_moduleManager));
-            TaskManagement.Installer.Install(_moduleManager, _moduleManager, _application);
-            AJ.Graphics.OpenTK.Installer.Install(_moduleManager, _moduleManager, _application);
-            _moduleManager.Install<ISceneManager, SceneManager>(new SceneManager());
+            _moduleManager.Install<ITaskManager, TaskManager>(new TaskManager(_application.NumOfTaskWorkers));
+            Graphics.OpenTK.Installer.Install(_moduleManager, _moduleManager, _application);
+            //last step
+            ModuleProvider.Get<IFileManager>().ScanInternalFiles();
         }
 
         private void GameLoop() {
-            var logger = _moduleManager.Get<ILogger>();
-            while (_isRunning) {
-                _moduleManager.Update();
-                logger.LogInfo("test", "testline");
+            try {
+                IShaderHandle sh = _moduleManager.Get<IGraphicsContext>().ShaderFactory.CreateShader("AJ.Engine.Graphics.Interfaces.Assets.Shaders.DefaultShader"); //<= we just want a default shader the graphics implementation is responsible for the file extension
+                while (_isRunning) {
+                    _moduleManager.Update();
+                }
+                _moduleManager.Get<IGraphicsContext>().ShaderFactory.DisposeShader(sh);
+            }
+            catch(Exception e) {
+                Stop();
+                ModuleProvider.Get<ILogger>().LogFatal(
+                    "FatalError",
+                    $"Fatal error encountered!{Globals.NewLine}" +
+                    $"{e}"
+                    );
             }
         }
 
         private void Deinitialize() {
-            AJ.Graphics.OpenTK.Installer.Uninstall(_moduleManager);
-            TaskManagement.Installer.Uninstall(_moduleManager);
-            CurrentLogger.Uninstall(_moduleManager);
+            Graphics.OpenTK.Installer.Uninstall(_moduleManager);
+            _moduleManager.Uninstall<ITaskManager>();
+            Logging.Installer.Uninstall(_moduleManager);
         }
     }
 }

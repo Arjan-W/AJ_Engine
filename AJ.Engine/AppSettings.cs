@@ -1,4 +1,4 @@
-﻿using AJ.Logging.Interfaces;
+﻿using AJ.Engine.Logging.Interfaces;
 using System;
 using System.Reflection;
 

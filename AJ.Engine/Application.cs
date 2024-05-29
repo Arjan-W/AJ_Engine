@@ -1,7 +1,7 @@
-﻿using AJ.Engine.Interfaces;
-using AJ.Graphics.Interfaces;
-using AJ.Graphics.Interfaces.Windowing;
-using AJ.Logging.Interfaces;
+﻿using AJ.Engine.Graphics.Interfaces;
+using AJ.Engine.Graphics.Interfaces.Windowing;
+using AJ.Engine.Interfaces;
+using AJ.Engine.Logging.Interfaces;
 using System;
 
 namespace AJ.Engine
@@ -36,8 +36,8 @@ namespace AJ.Engine
 
         internal void Initialize() {
             if (_closeOnRequest) {
-                IWindow window = Core.ModuleProvider.Get<IGraphicsContext>().Window;
-                window.OnCloseWindowRequest += () => Core.Stop();
+                IDisplay window = Core.ModuleProvider.Get<IGraphicsContext>().Display;
+                window.OnCloseRequest += () => Core.Stop();
             }
             OnInitialize();
         }

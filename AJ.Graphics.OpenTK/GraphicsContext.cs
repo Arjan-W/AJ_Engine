@@ -5,9 +5,7 @@ using AJ.Graphics.Interfaces.Resources;
 using AJ.Graphics.Interfaces.Windowing;
 using AJ.Graphics.OpenTK.Resources;
 using AJ.Graphics.OpenTK.Windowing;
-using AJ.Logging.Interfaces;
 using AJ.TaskManagement.Interfaces;
-using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -23,11 +21,11 @@ namespace AJ.Graphics.OpenTK
 
         private static GraphicsContext _instance;
         public static ResourceManager InternalResourceManager => _instance._resourceManager;
-        public static ILogger InternalLogger => _instance._logger;
+        //public static ILogger InternalLogger => _instance._logger;
         public static IFileManager InternalFileManager => _instance._fileManager;
         public static ITaskManager InternalTaskManager => _instance._taskManager;
         
-        private readonly ILogger _logger;
+        //private readonly ILogger _logger;
         private readonly IFileManager _fileManager;
         private readonly ITaskManager _taskManager;
 
@@ -38,7 +36,7 @@ namespace AJ.Graphics.OpenTK
         internal GraphicsContext(IModuleProvider moduleProvider, IApplication application) {
             _instance = this;
 
-            _logger = moduleProvider.Get<ILogger>();
+            //_logger = moduleProvider.Get<ILogger>();
             _fileManager = moduleProvider.Get<IFileManager>();
             _taskManager = moduleProvider.Get<ITaskManager>();
 
@@ -58,12 +56,12 @@ namespace AJ.Graphics.OpenTK
             _nativeWindow = new NativeWindow(nws);
             _window = new Window(_nativeWindow);
             _resourceManager = new ResourceManager(moduleProvider);
-            _logger.LogInfo(
-                "GraphicsContext initialized!",
-                $"{GL.GetString(StringName.Vendor)}" +
-                $"{GL.GetString(StringName.Version)}" +
-                $"{GL.GetString(StringName.Renderer)}"
-                );
+            //_logger.LogInfo(
+            //    "GraphicsContext initialized!",
+            //    $"{GL.GetString(StringName.Vendor)}" +
+            //    $"{GL.GetString(StringName.Version)}" +
+            //    $"{GL.GetString(StringName.Renderer)}"
+            //    );
         }
 
         void IModule.Update() {

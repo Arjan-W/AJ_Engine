@@ -2,6 +2,7 @@
 {
     public interface IFileManager
     {
+        void ScanInternalFiles();
         IFileHandle LoadFile(string path);
     }
 }

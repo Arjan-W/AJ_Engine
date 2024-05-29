@@ -1,6 +1,4 @@
 ﻿using AJ.Engine;
-using AJ.Engine.Interfaces.SceneManagement;
-using AJ.Engine.SceneManagement;
 
 namespace AJ.Test
 {

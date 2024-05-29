@@ -1,4 +1,4 @@
-﻿using AJ.Logging.Interfaces;
+﻿using AJ.Engine.Logging.Interfaces;
 using AJ.TaskManagement.Interfaces;
 using System.Collections.Concurrent;
 using System.Threading;

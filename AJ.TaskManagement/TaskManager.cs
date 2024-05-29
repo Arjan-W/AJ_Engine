@@ -1,5 +1,5 @@
 ﻿using AJ.Engine.Interfaces.ModuleManagement;
-using AJ.Logging.Interfaces;
+using AJ.Engine.Logging.Interfaces;
 using AJ.TaskManagement.Interfaces;
 using System.Collections.Concurrent;
 

@@ -2,7 +2,7 @@
 using AJ.Engine.Interfaces.ModuleManagement;
 using AJ.Engine.Interfaces.TimeManagement;
 using AJ.Engine.Interfaces.Util.Strings;
-using AJ.Logging.Interfaces;
+using AJ.Engine.Logging.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.IO;
@@ -29,10 +29,9 @@ namespace AJ.Engine.FileManagement
             _internalFileHandles = new ConcurrentDictionary<string, FileHandle>();
             _externalFileHandles = new ConcurrentDictionary<string, FileHandle>();
             _checkForFileChangeTimer = _gameTime.CreateTimer(CHECK_FILE_CHANGE_INTERVAL);
-            ScanForInternalFiles();
         }
 
-        private void ScanForInternalFiles()
+        public void ScanInternalFiles()
         {
             StringBuilder internalFilesFound = new StringBuilder();
             internalFilesFound.AppendLine("Initialized!");

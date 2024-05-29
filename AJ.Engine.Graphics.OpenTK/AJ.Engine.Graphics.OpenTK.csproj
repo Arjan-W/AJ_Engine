@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="OpenTK" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AJ.Engine.Graphics.Interfaces\AJ.Engine.Graphics.Interfaces.csproj" />
+    <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
     <ProjectReference Include="..\AJ.Engine.Logging.Interfaces\AJ.Engine.Logging.Interfaces.csproj" />
   </ItemGroup>
 

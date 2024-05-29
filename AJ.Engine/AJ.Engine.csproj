@@ -15,17 +15,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
-    <ProjectReference Include="..\AJ.Graphics.Interfaces\AJ.Graphics.Interfaces.csproj" />
-    <ProjectReference Include="..\AJ.Graphics.OpenTK\AJ.Graphics.OpenTK.csproj" />
-    <ProjectReference Include="..\AJ.Logging.Interfaces\AJ.Logging.Interfaces.csproj" />
-    <ProjectReference Include="..\AJ.LoggingV2\AJ.LoggingV2.csproj" />
-    <ProjectReference Include="..\AJ.TaskManagement.Interfaces\AJ.TaskManagement.Interfaces.csproj" />
-    <ProjectReference Include="..\AJ.TaskManagement\AJ.TaskManagement.csproj" />
+    <PackageReference Include="OpenTK.Mathematics" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OpenTK.Mathematics" Version="4.8.2" />
+    <ProjectReference Include="..\AJ.Engine.Graphics.Interfaces\AJ.Engine.Graphics.Interfaces.csproj" />
+    <ProjectReference Include="..\AJ.Engine.Graphics.OpenTK\AJ.Engine.Graphics.OpenTK.csproj" />
+    <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
+    <ProjectReference Include="..\AJ.Engine.Logging.Interfaces\AJ.Engine.Logging.Interfaces.csproj" />
+    <ProjectReference Include="..\AJ.Engine.Logging\AJ.Engine.Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>
