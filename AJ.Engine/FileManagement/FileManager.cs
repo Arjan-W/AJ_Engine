@@ -1,6 +1,7 @@
 ﻿using AJ.Engine.Interfaces.FileManager;
 using AJ.Engine.Interfaces.ModuleManagement;
 using AJ.Engine.Interfaces.TimeManagement;
+using AJ.Engine.Interfaces.Util.Strings;
 using AJ.Logging.Interfaces;
 using System;
 using System.Collections.Concurrent;
@@ -19,7 +20,7 @@ namespace AJ.Engine.FileManagement
         private readonly IGameTime _gameTime;
         private readonly ConcurrentDictionary<string, FileHandle> _internalFileHandles;
         private readonly ConcurrentDictionary<string, FileHandle> _externalFileHandles;
-        private readonly Timer _checkForFileChangeTimer;
+        private readonly ITimer _checkForFileChangeTimer;
 
         internal FileManager(IModuleProvider moduleProvider)
         {
@@ -27,7 +28,7 @@ namespace AJ.Engine.FileManagement
             _gameTime = moduleProvider.Get<IGameTime>();
             _internalFileHandles = new ConcurrentDictionary<string, FileHandle>();
             _externalFileHandles = new ConcurrentDictionary<string, FileHandle>();
-            _checkForFileChangeTimer = new Timer(CHECK_FILE_CHANGE_INTERVAL);
+            _checkForFileChangeTimer = _gameTime.CreateTimer(CHECK_FILE_CHANGE_INTERVAL);
             ScanForInternalFiles();
         }
 
@@ -48,6 +49,8 @@ namespace AJ.Engine.FileManagement
                     }
                 }
             }
+
+            internalFilesFound.Remove(internalFilesFound.Length - NewLine.Length, NewLine.Length);
             _logger.LogInfo("FileManager", internalFilesFound.ToString());
         }
 
@@ -90,9 +93,7 @@ namespace AJ.Engine.FileManagement
 
         void IModule.Update()
         {
-            _checkForFileChangeTimer.Update(_gameTime);
-
-            if (_checkForFileChangeTimer.HasElapsed)
+            if (_checkForFileChangeTimer.HasElapsed())
             {
                 if (_externalFileHandles.Count > 0)
                 {

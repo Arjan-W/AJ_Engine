@@ -16,9 +16,10 @@ namespace AJ.Logging.Interfaces
 
     public interface ILogger
     {
-        void LogInfo(string title, params string[] messages);
-        void LogWarning(string title, params string[] messages);
-        void LogError(string title, params string[] messages);
-        void LogDebug(string title, params string[] messages);
+        void LogInfo(string title, string message);
+        void LogWarning(string title, string message);
+        void LogError(string title, string message);
+        void LogFatal(string title, string message);
+        void LogDebug(string title, string message);
     }
 }

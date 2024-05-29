@@ -11,5 +11,7 @@ namespace AJ.Engine.Interfaces.TimeManagement
 
         public double ElapsedTimeD { get; }
         public double DeltaTimeD { get; }
+
+        ITimer CreateTimer(TimeSpan interval, bool repeat = true);
     }
 }

@@ -7,7 +7,7 @@ using AJ.Engine.ModuleManagement;
 using AJ.Engine.SceneManagement;
 using AJ.Engine.TimeManagement;
 using AJ.Logging.Interfaces;
-using CurrentLogger = AJ.Logging.V2.Installer;
+using CurrentLogger = AJ.LoggingV2.Installer;
 namespace AJ.Engine
 {
     public class Core
@@ -56,7 +56,7 @@ namespace AJ.Engine
             var logger = _moduleManager.Get<ILogger>();
             while (_isRunning) {
                 _moduleManager.Update();
-                logger.LogInfo("test", "testline", "testline");
+                logger.LogInfo("test", "testline");
             }
         }
 

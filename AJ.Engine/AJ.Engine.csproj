@@ -20,7 +20,6 @@
     <ProjectReference Include="..\AJ.Graphics.OpenTK\AJ.Graphics.OpenTK.csproj" />
     <ProjectReference Include="..\AJ.Logging.Interfaces\AJ.Logging.Interfaces.csproj" />
     <ProjectReference Include="..\AJ.LoggingV2\AJ.LoggingV2.csproj" />
-    <ProjectReference Include="..\AJ.Logging\AJ.Logging.csproj" />
     <ProjectReference Include="..\AJ.TaskManagement.Interfaces\AJ.TaskManagement.Interfaces.csproj" />
     <ProjectReference Include="..\AJ.TaskManagement\AJ.TaskManagement.csproj" />
   </ItemGroup>

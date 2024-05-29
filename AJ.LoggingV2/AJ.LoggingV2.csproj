@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
-    <ProjectReference Include="..\AJ.Logging\AJ.Logging.csproj" />
   </ItemGroup>
 
 </Project>

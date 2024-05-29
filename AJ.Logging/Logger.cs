@@ -8,7 +8,7 @@ using System.IO.Pipes;
 using System.Text;
 using System.Threading;
 using static AJ.Logging.LoggingBufferUtils;
-using Timer = AJ.Engine.Interfaces.TimeManagement.Timer;
+using ITimer = AJ.Engine.Interfaces.TimeManagement.ITimer;
 
 namespace AJ.Logging
 {
@@ -27,7 +27,7 @@ namespace AJ.Logging
         private readonly IGameTime _gameTime;
         private readonly LogTypes _logFilter;
 
-        private readonly Timer _timer;
+        private readonly ITimer _timer;
         private readonly AnonymousPipeServerStream _pipeServerOut;
         private readonly AnonymousPipeClientStream _pipeClientIn;
         private readonly string _filePath;

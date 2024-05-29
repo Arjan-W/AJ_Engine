@@ -46,6 +46,7 @@ namespace AJ.Graphics.OpenTK
             {
                 API = ContextAPI.OpenGL,
                 APIVersion = new Version(4, 5),
+                Profile = ContextProfile.Core,
                 AutoLoadBindings = true,
                 IsEventDriven = false,
                 ClientSize = new Vector2i(1920, 1080),
@@ -59,9 +60,9 @@ namespace AJ.Graphics.OpenTK
             _resourceManager = new ResourceManager(moduleProvider);
             _logger.LogInfo(
                 "GraphicsContext initialized!",
-                GL.GetString(StringName.Version),
-                GL.GetString(StringName.Vendor),
-                GL.GetString(StringName.Renderer)
+                $"{GL.GetString(StringName.Vendor)}" +
+                $"{GL.GetString(StringName.Version)}" +
+                $"{GL.GetString(StringName.Renderer)}"
                 );
         }
 

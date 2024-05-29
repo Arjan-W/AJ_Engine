@@ -41,5 +41,8 @@ namespace AJ.Engine.TimeManagement
                     _deltaTime = _deltaTimeConstraint.Value;
             }
         }
+        public ITimer CreateTimer(TimeSpan interval, bool repeat = true) {
+            return new Timer(this, interval, repeat);
+        }
     }
 }
