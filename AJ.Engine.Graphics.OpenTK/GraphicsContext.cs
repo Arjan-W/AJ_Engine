@@ -1,8 +1,10 @@
 ﻿using AJ.Engine.Graphics.Interfaces;
 using AJ.Engine.Graphics.Interfaces.Resources.Shaders;
+using AJ.Engine.Graphics.Interfaces.Resources.Textures;
 using AJ.Engine.Graphics.Interfaces.Windowing;
 using AJ.Engine.Graphics.OpenTK.Resources;
 using AJ.Engine.Graphics.OpenTK.Resources.Shaders;
+using AJ.Engine.Graphics.OpenTK.Resources.Textures;
 using AJ.Engine.Graphics.OpenTK.Windowing;
 using AJ.Engine.Interfaces;
 using AJ.Engine.Interfaces.FileManager;
@@ -31,6 +33,8 @@ namespace AJ.Engine.Graphics.OpenTK
 
         IDisplay IGraphicsContext.Display => _display;
         IShaderFactory IGraphicsContext.ShaderFactory => _shaderFactory;
+        ITextureFactory IGraphicsContext.TextureFactory => _textureFactory;
+
 
         private readonly ILogger _logger;
         private readonly IFileManager _fileManager;
@@ -40,6 +44,7 @@ namespace AJ.Engine.Graphics.OpenTK
         private readonly Display _display;
         private readonly ResourceManager _resourceManager;
         private readonly ShaderFactory _shaderFactory;
+        private readonly TextureFactory _textureFactory;
 
         internal GraphicsContext(IModuleProvider moduleProvider, IApplication application)
         {
@@ -53,6 +58,7 @@ namespace AJ.Engine.Graphics.OpenTK
             _display = new Display(_nativeWindow);
             _resourceManager = new ResourceManager();
             _shaderFactory = new ShaderFactory();
+            _textureFactory = new TextureFactory();
         }
 
         private NativeWindow InitializeOpenTK(IApplication application)
@@ -80,6 +86,14 @@ namespace AJ.Engine.Graphics.OpenTK
                 $"Version := {GL.GetString(StringName.Version)}");
 
             return nw;
+        }
+
+        void IGraphicsContext.SetClearColor(Color4 color) {
+            GL.ClearColor(color);
+        }
+
+        void IGraphicsContext.Clear() {
+            GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit | ClearBufferMask.StencilBufferBit);
         }
 
         void IModule.Update()

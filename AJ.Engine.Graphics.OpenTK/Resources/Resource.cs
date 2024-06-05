@@ -12,13 +12,15 @@ internal abstract class Resource : IResource
     public event OnInitialized OnInitialized;
 
     private readonly ResourceManager _resourceManager;
+    private readonly bool _loadMultithreaded;
     private bool _isLoaded;
     private bool _isInitialized;
     private bool _isDisposed;
 
-    internal Resource()
+    internal Resource(bool loadMultithreaded = true)
     {
         _resourceManager = GraphicsContext.ResourceManager;
+        _loadMultithreaded = loadMultithreaded;
         _isLoaded = false;
         _isInitialized = false;
         _isDisposed = false;
@@ -26,18 +28,24 @@ internal abstract class Resource : IResource
 
     internal bool Load()
     {
-        _isLoaded = OnLoad();
-        if (_isLoaded)
-            _resourceManager.QueueForInitialization(this);
-        else
-            Dispose();
-        return _isLoaded;
+        if (_loadMultithreaded) {
+            _isLoaded = OnLoad();
+            if (_isLoaded)
+                _resourceManager.QueueForInitialization(this);
+            else
+                Dispose();
+            return _isLoaded;
+        }
+        return false;
     }
 
-    protected abstract bool OnLoad();
+    protected virtual bool OnLoad() { return false; }
 
     internal void Initialize()
     {
+        if(!_loadMultithreaded)
+            _isLoaded = true;
+
         _isInitialized = OnInitialize();
         if (_isInitialized)
             OnInitialized?.Invoke();

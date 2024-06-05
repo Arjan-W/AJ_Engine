@@ -1,6 +1,7 @@
 ﻿using AJ.Engine.FileManagement;
 using AJ.Engine.Graphics.Interfaces;
 using AJ.Engine.Graphics.Interfaces.Resources.Shaders;
+using AJ.Engine.Graphics.Interfaces.Resources.Textures;
 using AJ.Engine.Interfaces.FileManager;
 using AJ.Engine.Interfaces.ModuleManagement;
 using AJ.Engine.Interfaces.TaskManagement;
@@ -10,6 +11,7 @@ using AJ.Engine.Logging.Interfaces;
 using AJ.Engine.ModuleManagement;
 using AJ.Engine.TaskManagement;
 using AJ.Engine.TimeManagement;
+using OpenTK.Mathematics;
 using System;
 
 namespace AJ.Engine
@@ -59,11 +61,28 @@ namespace AJ.Engine
 
         private void GameLoop() {
             try {
-                IShaderHandle sh = _moduleManager.Get<IGraphicsContext>().ShaderFactory.CreateShader("AJ.Engine.Graphics.Interfaces.Assets.Shaders.DefaultShader"); //<= we just want a default shader the graphics implementation is responsible for the file extension
+                IGraphicsContext gc = _moduleManager.Get<IGraphicsContext>();
+                IShaderHandle sh = gc.ShaderFactory.CreateShader("AJ.Engine.Graphics.Interfaces.Assets.Shaders.DefaultShader"); //<= we just want a default shader the graphics implementation is responsible for the file extension
+                ITextureHandle th1 = gc.TextureFactory.CreateTexture("AJ.Engine.Graphics.Interfaces.Assets.Textures.horiFlipTest.png", true, false);
+                ITextureHandle th2 = gc.TextureFactory.CreateTexture("AJ.Engine.Graphics.Interfaces.Assets.Textures.vertFlipTest.png", false, true);
+
+                ISamplerHandle sah = gc.TextureFactory.CreateSampler();
+                sah.SetTextureVerticalWrap(WrapMode.CLAMP_TO_EDGE);
+                sah.SetTextureHorizontalWrap(WrapMode.CLAMP_TO_EDGE);
+                sah.SetMagnificationFilter(MagnificationFilter.LINEAR);
+                sah.SetMinificationFilter(MinificationFilter.LINEAR);
+
+                gc.SetClearColor(Color4.CornflowerBlue);
+
                 while (_isRunning) {
                     _moduleManager.Update();
+                    gc.Clear();
                 }
-                _moduleManager.Get<IGraphicsContext>().ShaderFactory.DisposeShader(sh);
+
+                gc.ShaderFactory.DisposeShader(sh);
+                gc.TextureFactory.DisposeTexture(th1);
+                gc.TextureFactory.DisposeTexture(th2);
+                gc.TextureFactory.DisposeSampler(sah);
             }
             catch(Exception e) {
                 Stop();

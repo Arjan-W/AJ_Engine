@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <None Remove="Assets\Shaders\DefaultShader.glsl" />
+    <None Remove="Assets\Textures\horiFlipTest.png" />
+    <None Remove="Assets\Textures\vertFlipTest.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\Shaders\DefaultShader.glsl" />
+    <EmbeddedResource Include="Assets\Textures\horiFlipTest.png" />
+    <EmbeddedResource Include="Assets\Textures\vertFlipTest.png" />
   </ItemGroup>
 
   <ItemGroup>

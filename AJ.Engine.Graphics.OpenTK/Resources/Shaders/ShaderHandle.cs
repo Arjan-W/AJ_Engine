@@ -25,8 +25,6 @@ internal class ShaderHandle : Resource, IShaderHandle, ITask
     private const int FRAGMENT_SHADER_ID = 2;
     private const int NUMBER_OF_SHADERS = 3;
 
-    private const int INVALID_ID = -1;
-
     public bool HasVertexShader => _hasVertexShader;
     public bool HasGeometryShader => _hasGeometryShader;
     public bool HasFragmentShader => _hasFragmentShader;
@@ -115,11 +113,11 @@ internal class ShaderHandle : Resource, IShaderHandle, ITask
 
             if (!_hasVertexShader || !_hasFragmentShader)
             {
-                _logger.LogError(LOG_TITLE, $"Shader {_fileHandle.AbsolutePath} needs atleast a vertex or a fragment shader!");
+                _logger.LogError(LOG_TITLE, $"Shader sources from {_fileHandle.AbsolutePath} need atleast a one vertex and one fragment source!");
                 return false;
             }
 
-            _logger.LogDebug(LOG_TITLE, $"Shader {_fileHandle.AbsolutePath} loaded!");
+            _logger.LogDebug(LOG_TITLE, $"Shader sources loaded from {_fileHandle.AbsolutePath} loaded!");
             return true;
         }
         catch (Exception e)
@@ -246,6 +244,14 @@ internal class ShaderHandle : Resource, IShaderHandle, ITask
             return true;
         }
 
+        return false;
+    }
+
+    public bool Bind() {
+        if (IsReady) {
+            GL.UseProgram(_programId);
+            return true;
+        }
         return false;
     }
 

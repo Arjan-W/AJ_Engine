@@ -10,4 +10,5 @@ public interface IShaderHandle : IResource
     public IShaderUniform this[string value] { get; }
 
     public bool ValidateProgram();
+    public bool Bind();
 }

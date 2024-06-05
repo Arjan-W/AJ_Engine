@@ -6,11 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="OpenTK" Version="4.8.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<Using Include="OpenTK.Graphics.OpenGL4" />
+		<Using Static="true" Include="AJ.Engine.Graphics.OpenTK.GraphicsGlobals" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="OpenTK" Version="4.8.2" />
+		<PackageReference Include="SkiaSharp" Version="2.88.8" />
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <ProjectReference Include="..\AJ.Engine.Graphics.Interfaces\AJ.Engine.Graphics.Interfaces.csproj" />
     <ProjectReference Include="..\AJ.Engine.Interfaces\AJ.Engine.Interfaces.csproj" />
     <ProjectReference Include="..\AJ.Engine.Logging.Interfaces\AJ.Engine.Logging.Interfaces.csproj" />
